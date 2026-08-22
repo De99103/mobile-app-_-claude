@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="stylesheet" href="_ds/industry-89e8c819-f2da-463b-b43e-41d3c778803b/styles.css"><script src="_ds/industry-89e8c819-f2da-463b-b43e-41d3c778803b/_ds_bundle.js"></script><script src="./image-slot.js"></script><style>body{margin:0;background:#e4e4e6}a{color:var(--color-accent);text-decoration:none}a:hover{color:var(--color-accent-700)}.ph{position:relative;background:repeating-linear-gradient(135deg,#dfe4e9 0 5px,#eff0f1 5px 10px)}.ph>span{position:absolute;left:6px;bottom:5px;font:9px ui-monospace,Menlo,monospace;letter-spacing:.02em;color:#41618066;text-transform:uppercase}.row{display:flex;align-items:center;gap:10px}.kick{font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--color-accent-700);text-transform:uppercase}.mono{font:10px ui-monospace,Menlo,monospace;color:#1d1f2099}.scr{padding:58px 16px 22px}.rule{border-bottom:1px solid var(--color-divider)}</style></helmet>
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px 80px;font-family:var(--font-body)">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="402px" height="874px" hint-size="402px,874px">
+<div style="height:100%;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)">
+<div style="flex:1;min-height:0;overflow-y:auto;overflow-x:hidden">
+
+<sc-if value="{{ onOnboard }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Onboarding" style="min-height:850px;display:flex;flex-direction:column;padding:64px 26px 30px">
+  <div class="row" style="gap:7px;margin-bottom:38px">
+    <div style="width:9px;height:9px;background:var(--color-accent)"></div>
+    <div style="font-family:var(--font-heading);font-size:17px;letter-spacing:.14em;text-transform:uppercase">Rack</div>
+    <div style="margin-left:auto" class="mono">{{ stepLabel }}</div>
+  </div>
+  <sc-if value="{{ step0 }}" hint-placeholder-val="{{ true }}">
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div class="blueprint" style="position:relative;aspect-ratio:4/3;margin:0 0 32px">
+      <image-slot style="position:absolute;inset:0;width:100%;height:100%" id="rack-hero" shape="rect" fit="cover" placeholder="Drop a photo of your closet"></image-slot>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </div>
+    <h1 style="font-size:38px;line-height:1.05;margin:0 0 14px;text-wrap:pretty">Everything you own,<br>on one page.</h1>
+    <p style="font-size:15px;line-height:1.55;color:#1d1f20cc;margin:0">Photograph a piece and note where it came from. Rack keeps the rest — what it cost, how often you wear it, and what it goes with.</p>
+    <div style="flex:1"></div>
+    <button class="btn btn-primary btn-block" style="height:46px;font-size:16px" onClick="{{ next }}">Start my closet</button>
+    <button class="btn btn-ghost btn-block" onClick="{{ enterApp }}">Look around first</button>
+  </div>
+  </sc-if>
+  <sc-if value="{{ step1 }}">
+  <div style="flex:1;display:flex;flex-direction:column">
+    <h2 style="font-size:30px;margin:0 0 8px">Add your first piece</h2>
+    <p style="font-size:14px;color:#1d1f20aa;margin:0 0 20px">A name and a shop is enough. The rest can wait.</p>
+    <div class="blueprint" style="padding:16px;display:flex;flex-direction:column;gap:13px">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <div class="field"><label>What is it</label><input class="input" placeholder="Ecru oxford shirt" value="{{ draft.name }}" onChange="{{ setDraftName }}"></div>
+      <div class="field"><label>Where you bought it</label><input class="input" placeholder="Field &amp; Loom" value="{{ draft.store }}" onChange="{{ setDraftStore }}"></div>
+      <div class="field"><label>What you paid</label><input class="input" placeholder="68" value="{{ draft.price }}" onChange="{{ setDraftPrice }}"></div>
+      <div class="field"><label>Kind</label>
+        <div class="seg" style="margin-top:2px;width:100%">
+          <sc-for list="{{ catOpts }}" as="c" hint-placeholder-count="5">
+            <label class="seg-opt" style="flex:1;justify-content:center;font-size:12px"><input type="radio" name="kind1" checked="{{ c.on }}" onChange="{{ c.pick }}">{{ c.name }}</label>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;min-height:20px"></div>
+    <button class="btn btn-primary btn-block" style="height:46px;font-size:16px" onClick="{{ saveFirst }}">Add it</button>
+  </div>
+  </sc-if>
+  <sc-if value="{{ step2 }}">
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div class="blueprint" style="position:relative;aspect-ratio:1/1;margin:0 0 28px">
+      <image-slot style="position:absolute;inset:0;width:100%;height:100%" id="rack-first" shape="rect" fit="cover" placeholder="Drop a photo of it"></image-slot>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </div>
+    <h2 style="font-size:30px;margin:0 0 10px">{{ firstLine }}</h2>
+    <p style="font-size:15px;line-height:1.55;color:#1d1f20cc;margin:0">A sample closet is already loaded so you can look around. Everything you add or change here sticks — it saves on this device.</p>
+    <div style="flex:1"></div>
+    <button class="btn btn-primary btn-block" style="height:46px;font-size:16px" onClick="{{ enterApp }}">Go to my closet</button>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ onCloset }}">
+<div data-screen-label="Closet" class="scr">
+  <div class="row" style="margin-bottom:14px">
+    <div>
+      <div class="kick">Closet index</div>
+      <h2 style="font-size:32px;margin:2px 0 0">My closet</h2>
+    </div>
+    <div class="row" style="margin-left:auto;gap:8px">
+      <a href="#" class="btn btn-icon btn-secondary" title="Shops" onClick="{{ goShops }}">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h16v11H4z"></path><path d="M4 9l2-5h12l2 5"></path></svg>
+      </a>
+      <a href="#" class="btn btn-icon btn-primary" title="Add a piece" onClick="{{ openAdd }}">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      </a>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom:12px;gap:8px">
+    <div class="mono">{{ countLine }}</div><div class="mono">·</div><div class="mono">{{ wornLine }}</div>
+    <sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}"><div class="mono">·</div><div class="mono">{{ spendLine }}</div></sc-if>
+  </div>
+
+  <input class="input" style="margin-bottom:10px" placeholder="Search a piece, a shop, a colour" value="{{ q }}" onChange="{{ setQ }}">
+  <div class="seg" style="margin-bottom:10px;width:100%">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+      <label class="seg-opt" style="flex:1;justify-content:center;font-size:11.5px"><input type="radio" name="cat" checked="{{ c.on }}" onChange="{{ c.pick }}">{{ c.name }}</label>
+    </sc-for>
+  </div>
+  <div class="row" style="margin-bottom:16px;gap:8px">
+    <span class="mono">Sort</span>
+    <div class="seg" style="flex:1">
+      <sc-for list="{{ sorts }}" as="s" hint-placeholder-count="3">
+        <label class="seg-opt" style="flex:1;justify-content:center;font-size:11.5px"><input type="radio" name="sort" checked="{{ s.on }}" onChange="{{ s.pick }}">{{ s.name }}</label>
+      </sc-for>
+    </div>
+  </div>
+
+  <sc-if value="{{ showNudge }}">
+  <a href="#" onClick="{{ goNudges }}" class="blueprint" style="display:block;padding:12px 14px;margin-bottom:20px;border-left:3px solid var(--color-accent);color:inherit">
+    <i class="corner tr"></i><i class="corner br"></i>
+    <div style="font-family:var(--font-heading);font-size:15px;margin-bottom:3px">{{ nudgeHead }}</div>
+    <div style="font-size:12.5px;color:#1d1f20aa">{{ nudgeSub }}</div>
+  </a>
+  </sc-if>
+
+  <sc-if value="{{ hasWishlist }}">
+  <a href="#" onClick="{{ goList }}" class="row rule" style="padding:10px 2px;margin-bottom:18px;color:inherit">
+    <span style="font-size:14px;flex:1">Shopping list</span>
+    <span class="mono">{{ wishCount }}</span>
+    <span style="color:var(--color-accent)">→</span>
+  </a>
+  </sc-if>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px 18px;padding:2px">
+    <sc-for list="{{ shown }}" as="it" hint-placeholder-count="6">
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+        <div class="blueprint" style="position:relative;aspect-ratio:3/4;min-width:0">
+          <image-slot style="position:absolute;inset:0;width:100%;height:100%" id="{{ it.slotId }}" shape="rect" fit="cover" placeholder="{{ it.name }}"></image-slot>
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        </div>
+        <a href="#" onClick="{{ it.open }}" style="color:inherit;display:block">
+          <div class="row" style="gap:6px;align-items:flex-start">
+            <div style="flex:1">
+              <div style="font-family:var(--font-heading);font-size:15px;line-height:1.15">{{ it.name }}</div>
+              <div class="mono" style="margin-top:3px">{{ it.metaLine }}</div>
+            </div>
+            <div style="color:var(--color-accent);font-size:13px;margin-top:2px">→</div>
+          </div>
+        </a>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ noResults }}">
+    <div class="blueprint" style="padding:20px;text-align:center;margin-top:6px">
+      <i class="corner tl"></i><i class="corner br"></i>
+      <div style="font-family:var(--font-heading);font-size:18px">Nothing matches that.</div>
+      <div style="font-size:13px;color:#1d1f20aa;margin-top:4px">Try a shop name, or clear the filter.</div>
+    </div>
+  </sc-if>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onItem }}">
+<div data-screen-label="Item detail" class="scr">
+  <div class="row" style="margin-bottom:14px">
+    <a href="#" onClick="{{ back }}" class="btn btn-secondary">← Closet</a>
+    <a href="#" onClick="{{ goEdit }}" class="btn btn-ghost" style="margin-left:auto">Edit details</a>
+  </div>
+  <div class="blueprint" style="position:relative;aspect-ratio:1/1;margin:6px 2px 20px">
+    <image-slot style="position:absolute;inset:0;width:100%;height:100%" id="{{ sel.slotId }}" shape="rect" fit="cover" placeholder="{{ sel.name }}"></image-slot>
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+  </div>
+  <h2 style="font-size:30px;margin:0 0 8px">{{ sel.name }}</h2>
+  <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:20px">
+    <span class="tag tag-accent">{{ sel.cat }}</span>
+    <span class="tag tag-neutral">{{ sel.colour }}</span>
+    <span class="tag tag-outline">{{ sel.wornTag }}</span>
+  </div>
+
+  <div class="kick" style="margin-bottom:8px">Where it came from</div>
+  <div class="blueprint" style="padding:2px 14px 6px;margin-bottom:20px">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <table class="table"><tbody>
+      <tr><th style="width:44%">Shop</th><td>{{ sel.store }}</td></tr>
+      <tr><th>City</th><td>{{ sel.city }}</td></tr>
+      <tr><th>Bought</th><td>{{ sel.bought }}</td></tr>
+      <sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}"><tr><th>Paid</th><td>{{ sel.priceLabel }}</td></tr></sc-if>
+      <tr><th>Worn</th><td>{{ sel.wornLabel }}</td></tr>
+      <tr><th>Last worn</th><td>{{ sel.lastWorn }}</td></tr>
+      <sc-if value="{{ sel.hasUrl }}"><tr><th>Product page</th><td><a href="{{ sel.url }}" target="_blank" rel="noreferrer">{{ sel.host }} ↗</a></td></tr></sc-if>
+      <sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}"><tr><th>Per wear</th><td style="color:var(--color-accent-700)">{{ sel.cpw }}</td></tr></sc-if>
+    </tbody></table>
+  </div>
+
+  <div class="kick" style="margin-bottom:8px">Wear log</div>
+  <div style="margin-bottom:22px">
+    <sc-for list="{{ sel.wearLog }}" as="w" hint-placeholder-count="3">
+      <div class="row rule" style="padding:9px 2px;font-size:13px"><span>{{ w.when }}</span><span class="mono" style="margin-left:auto">{{ w.ago }}</span></div>
+    </sc-for>
+    <sc-if value="{{ sel.neverWorn }}">
+      <div style="font-size:13px;color:#1d1f20aa;padding:8px 2px">Not worn yet. It's been waiting since {{ sel.bought }}.</div>
+    </sc-if>
+  </div>
+
+  <div class="kick" style="margin-bottom:8px">In outfits</div>
+  <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:22px">
+    <sc-for list="{{ sel.inOutfits }}" as="o" hint-placeholder-count="2">
+      <a href="#" onClick="{{ o.open }}" class="tag tag-outline" style="cursor:pointer">{{ o.name }}</a>
+    </sc-for>
+    <sc-if value="{{ sel.noOutfits }}"><span style="font-size:13px;color:#1d1f20aa">Not in any outfit yet.</span></sc-if>
+  </div>
+
+  <div class="row" style="gap:10px">
+    <button class="btn btn-primary" style="flex:1;height:44px;font-size:15px" onClick="{{ logWear }}">Wore it today</button>
+    <button class="btn btn-secondary" style="height:44px" onClick="{{ addToOutfit }}">To outfit</button>
+  </div>
+  <button class="btn btn-ghost btn-block" style="margin-top:10px" onClick="{{ askDelete }}">Remove from closet</button>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onForm }}">
+<div data-screen-label="Add or edit piece" class="scr">
+  <a href="#" onClick="{{ back }}" class="btn btn-secondary" style="margin-bottom:16px">← Cancel</a>
+  <div class="kick">{{ formKick }}</div>
+  <h2 style="font-size:30px;margin:2px 0 18px">{{ formTitle }}</h2>
+  <div class="blueprint" style="position:relative;aspect-ratio:4/3;margin:0 2px 20px">
+    <image-slot style="position:absolute;inset:0;width:100%;height:100%" id="{{ draft.slotId }}" shape="rect" fit="cover" placeholder="Drop the photo here"></image-slot>
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+  </div>
+  <div class="blueprint" style="padding:16px;display:flex;flex-direction:column;gap:13px;margin-bottom:18px">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div class="field"><label>Name</label><input class="input" placeholder="Ecru oxford shirt" value="{{ draft.name }}" onChange="{{ setDraftName }}"></div>
+    <div class="field"><label>Kind</label>
+      <div class="seg" style="margin-top:2px;width:100%">
+        <sc-for list="{{ catOpts }}" as="c" hint-placeholder-count="5">
+          <label class="seg-opt" style="flex:1;justify-content:center;font-size:11.5px"><input type="radio" name="kind2" checked="{{ c.on }}" onChange="{{ c.pick }}">{{ c.name }}</label>
+        </sc-for>
+      </div>
+    </div>
+    <div class="field"><label>Colour</label><input class="input" placeholder="Ecru" value="{{ draft.colour }}" onChange="{{ setDraftColour }}"></div>
+    <div class="field"><label>Shop</label><input class="input" placeholder="Field &amp; Loom" value="{{ draft.store }}" onChange="{{ setDraftStore }}"></div>
+    <div class="field"><label>City</label><input class="input" placeholder="Portland" value="{{ draft.city }}" onChange="{{ setDraftCity }}"></div>
+    <div class="field"><label>Bought</label><input class="input" type="month" value="{{ draft.bought }}" onChange="{{ setDraftBought }}"></div>
+    <div class="field"><label>Paid</label><input class="input" placeholder="68" value="{{ draft.price }}" onChange="{{ setDraftPrice }}"></div>
+  </div>
+  <button class="btn btn-primary btn-block" style="height:46px;font-size:16px" onClick="{{ saveDraft }}">{{ saveItemLabel }}</button>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onLink }}">
+<div data-screen-label="Add from a link" class="scr">
+  <a href="#" onClick="{{ back }}" class="btn btn-secondary" style="margin-bottom:16px">← Cancel</a>
+  <div class="kick">From a shop</div>
+  <h2 style="font-size:30px;margin:2px 0 6px">Paste the link</h2>
+  <p style="font-size:13.5px;color:#1d1f20aa;margin:0 0 18px">The product page from wherever you found it. We'll read what we can and you fix the rest.</p>
+  <div class="field" style="margin-bottom:12px"><label>Product link</label>
+    <input class="input" placeholder="https://fieldandloom.com/ecru-oxford-shirt" value="{{ linkUrl }}" onChange="{{ setLink }}">
+  </div>
+  <button class="btn btn-secondary btn-block" style="height:42px;margin-bottom:20px" onClick="{{ readLink }}">Read the link</button>
+
+  <sc-if value="{{ linkRead }}">
+  <div class="kick" style="margin-bottom:8px">What we got</div>
+  <div class="blueprint" style="padding:14px;display:flex;flex-direction:column;gap:13px;margin-bottom:18px">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div class="row" style="gap:12px;align-items:stretch">
+      <div class="blueprint" style="position:relative;width:88px;height:110px;flex:none;min-width:0">
+        <image-slot style="position:absolute;inset:0;width:100%;height:100%" id="{{ draft.slotId }}" shape="rect" fit="cover" placeholder="Drop the shot"></image-slot>
+        <i class="corner tl"></i><i class="corner br"></i>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="mono" style="letter-spacing:.1em;text-transform:uppercase;font-size:9.5px">{{ linkHost }}</div>
+        <div style="font-family:var(--font-heading);font-size:18px;line-height:1.2;margin-top:3px">{{ namePreview }}</div>
+        <div class="mono" style="margin-top:4px">{{ linkGuess }}</div>
+      </div>
+    </div>
+    <div class="field"><label>Name</label><input class="input" placeholder="Ribbed knit vest" value="{{ draft.name }}" onChange="{{ setDraftName }}"></div>
+    <div class="field"><label>Shop</label><input class="input" placeholder="Shop name" value="{{ draft.store }}" onChange="{{ setDraftStore }}"></div>
+    <div class="field"><label>Price</label><input class="input" placeholder="68" value="{{ draft.price }}" onChange="{{ setDraftPrice }}"></div>
+    <div class="field"><label>Kind</label>
+      <div class="seg" style="margin-top:2px;width:100%">
+        <sc-for list="{{ catOpts }}" as="c" hint-placeholder-count="5">
+          <label class="seg-opt" style="flex:1;justify-content:center;font-size:11.5px"><input type="radio" name="kind3" checked="{{ c.on }}" onChange="{{ c.pick }}">{{ c.name }}</label>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div class="kick" style="margin-bottom:8px">Where does it go</div>
+  <div style="display:flex;flex-direction:column;gap:12px;padding:2px;margin-bottom:18px">
+    <sc-for list="{{ dests }}" as="d" hint-placeholder-count="2">
+      <a href="#" onClick="{{ d.pick }}" class="blueprint" style="display:block;padding:12px 14px;color:inherit">
+        <i class="corner tl"></i><i class="corner br"></i>
+        <div class="row">
+          <div style="flex:1">
+            <div style="font-family:var(--font-heading);font-size:17px">{{ d.title }}</div>
+            <div style="font-size:12px;color:#1d1f20aa;margin-top:2px">{{ d.sub }}</div>
+          </div>
+          <div style="font-size:16px;color:var(--color-accent)">{{ d.mark }}</div>
+        </div>
+      </a>
+    </sc-for>
+  </div>
+  <button class="btn btn-primary btn-block" style="height:46px;font-size:16px" onClick="{{ saveLink }}">{{ linkCta }}</button>
+  </sc-if>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onList }}">
+<div data-screen-label="Shopping list" class="scr">
+  <div class="row" style="margin-bottom:14px">
+    <div>
+      <div class="kick">Not bought yet</div>
+      <h2 style="font-size:32px;margin:2px 0 0">Shopping list</h2>
+    </div>
+    <a href="#" class="btn btn-icon btn-primary" style="margin-left:auto" title="Add from a link" onClick="{{ goLink }}">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </a>
+  </div>
+  <div class="row" style="gap:8px;margin-bottom:18px"><span class="mono">{{ wishCount }}</span><sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}"><span class="mono">·</span><span class="mono">{{ wishTotal }}</span></sc-if></div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;padding:2px">
+    <sc-for list="{{ wishlist }}" as="w" hint-placeholder-count="2">
+      <div class="blueprint" style="padding:12px">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="row" style="gap:12px;align-items:flex-start;margin-bottom:10px">
+          <div class="ph" style="width:52px;height:66px;flex:none;border:1px solid var(--color-divider)"><span>{{ w.short }}</span></div>
+          <div style="flex:1;min-width:0">
+            <div style="font-family:var(--font-heading);font-size:17px;line-height:1.2">{{ w.name }}</div>
+            <div class="mono" style="margin-top:3px">{{ w.metaLine }}</div>
+            <a href="{{ w.url }}" target="_blank" rel="noreferrer" style="font-size:12px">{{ w.host }} ↗</a>
+          </div>
+        </div>
+        <div class="row" style="gap:8px">
+          <button class="btn btn-primary" style="flex:1" onClick="{{ w.bought }}">I bought it</button>
+          <button class="btn btn-secondary" onClick="{{ w.drop }}">Remove</button>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ wishEmpty }}">
+    <div class="blueprint" style="padding:22px;text-align:center">
+      <i class="corner tl"></i><i class="corner br"></i>
+      <div style="font-family:var(--font-heading);font-size:19px">Nothing saved yet.</div>
+      <div style="font-size:13px;color:#1d1f20aa;margin:6px 0 0">Paste a shop link and park it here until you decide.</div>
+    </div>
+  </sc-if>
+  <button class="btn btn-secondary btn-block" style="margin-top:20px;height:44px" onClick="{{ goLink }}">Add from a link</button>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onBuild }}">
+<div data-screen-label="Outfit builder" class="scr">
+  <div class="kick">Assembly</div>
+  <h2 style="font-size:32px;margin:2px 0 4px">Build an outfit</h2>
+  <p style="font-size:13.5px;color:#1d1f20aa;margin:0 0 18px">Fill the slots you care about. Empty ones are fine.</p>
+  <div style="display:flex;flex-direction:column;gap:16px;padding:2px;margin-bottom:18px">
+    <sc-for list="{{ slots }}" as="s" hint-placeholder-count="5">
+      <div class="blueprint" style="display:flex;align-items:center;gap:14px;padding:12px">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="ph" style="width:56px;height:72px;flex:none;border:1px solid var(--color-divider)"><span>{{ s.short }}</span></div>
+        <a href="#" onClick="{{ s.pick }}" style="flex:1;min-width:0;color:inherit">
+          <div class="mono" style="letter-spacing:.12em;text-transform:uppercase;font-size:9.5px">{{ s.label }}</div>
+          <div style="font-family:var(--font-heading);font-size:17px;line-height:1.2;margin-top:2px">{{ s.name }}</div>
+          <div style="font-size:11.5px;color:#1d1f20aa">{{ s.sub }}</div>
+        </a>
+        <a href="#" onClick="{{ s.act }}" style="font-size:18px;padding:6px">{{ s.mark }}</a>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}">
+    <div class="row rule" style="padding:0 2px 10px;margin-bottom:14px"><span class="mono">Outfit value</span><span class="mono" style="margin-left:auto">{{ builderValue }}</span></div>
+  </sc-if>
+  <div class="field" style="margin-bottom:14px"><label>Call it something</label>
+    <input class="input" placeholder="Friday coffee run" value="{{ outfitName }}" onChange="{{ setName }}">
+  </div>
+  <button class="btn btn-primary btn-block" style="height:46px;font-size:16px" onClick="{{ saveOutfit }}">{{ saveLabel }}</button>
+  <button class="btn btn-ghost btn-block" onClick="{{ clearBuilder }}">Clear the slots</button>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onOutfits }}">
+<div data-screen-label="Outfits" class="scr">
+  <div class="kick">Saved sets</div>
+  <h2 style="font-size:32px;margin:2px 0 18px">Outfits</h2>
+  <div style="display:flex;flex-direction:column;gap:24px;padding:2px">
+    <sc-for list="{{ outfits }}" as="o" hint-placeholder-count="3">
+      <a href="#" onClick="{{ o.open }}" class="blueprint" style="display:block;padding:14px;color:inherit">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="row" style="margin-bottom:12px">
+          <div style="font-family:var(--font-heading);font-size:19px">{{ o.name }}</div>
+          <div class="mono" style="margin-left:auto">{{ o.meta }}</div>
+        </div>
+        <div class="row" style="gap:8px;align-items:stretch">
+          <sc-for list="{{ o.pieces }}" as="p" hint-placeholder-count="4">
+            <div class="ph" style="flex:1;aspect-ratio:3/4;border:1px solid var(--color-divider)"><span>{{ p.short }}</span></div>
+          </sc-for>
+        </div>
+      </a>
+    </sc-for>
+  </div>
+  <sc-if value="{{ noOutfitsAtAll }}">
+    <div class="blueprint" style="padding:22px;text-align:center">
+      <i class="corner tl"></i><i class="corner br"></i>
+      <div style="font-family:var(--font-heading);font-size:19px">No outfits saved yet.</div>
+      <div style="font-size:13px;color:#1d1f20aa;margin:6px 0 0">Build one and it'll live here.</div>
+    </div>
+  </sc-if>
+  <button class="btn btn-secondary btn-block" style="margin-top:22px;height:44px" onClick="{{ goBuild }}">Build another</button>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onOutfit }}">
+<div data-screen-label="Outfit detail" class="scr">
+  <a href="#" onClick="{{ goOutfits }}" class="btn btn-secondary" style="margin-bottom:16px">← Outfits</a>
+  <div class="kick">{{ outfit.meta }}</div>
+  <h2 style="font-size:30px;margin:2px 0 18px">{{ outfit.name }}</h2>
+  <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:20px">
+    <sc-for list="{{ outfit.pieces }}" as="p" hint-placeholder-count="4">
+      <a href="#" onClick="{{ p.open }}" class="row rule" style="gap:12px;padding:10px 2px;color:inherit">
+        <div class="ph" style="width:44px;height:56px;flex:none;border:1px solid var(--color-divider)"></div>
+        <div style="flex:1">
+          <div style="font-family:var(--font-heading);font-size:16px">{{ p.name }}</div>
+          <div class="mono">{{ p.metaLine }}</div>
+        </div>
+        <div style="color:var(--color-accent)">→</div>
+      </a>
+    </sc-for>
+  </div>
+  <sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}">
+    <div class="row rule" style="padding:0 2px 12px;margin-bottom:16px"><span class="mono">Outfit value</span><span class="mono" style="margin-left:auto">{{ outfit.value }}</span></div>
+  </sc-if>
+  <button class="btn btn-primary btn-block" style="height:46px;font-size:16px" onClick="{{ wearOutfit }}">Wearing this today</button>
+  <button class="btn btn-secondary btn-block" style="height:42px" onClick="{{ editOutfit }}">Open in the builder</button>
+  <button class="btn btn-ghost btn-block" onClick="{{ deleteOutfit }}">Delete this outfit</button>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onLog }}">
+<div data-screen-label="Wear log" class="scr">
+  <div class="kick">What you actually wore</div>
+  <h2 style="font-size:32px;margin:2px 0 6px">Log</h2>
+  <div class="row" style="gap:8px;margin-bottom:18px"><span class="mono">{{ logCount }}</span><span class="mono">·</span><span class="mono">{{ logSpan }}</span></div>
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <sc-for list="{{ logDays }}" as="d" hint-placeholder-count="6">
+      <div class="rule" style="padding:12px 2px">
+        <div class="row"><div style="font-family:var(--font-heading);font-size:16px">{{ d.when }}</div><div class="mono" style="margin-left:auto">{{ d.ago }}</div></div>
+        <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:7px">
+          <sc-for list="{{ d.pieces }}" as="p" hint-placeholder-count="3">
+            <a href="#" onClick="{{ p.open }}" class="tag tag-neutral" style="cursor:pointer">{{ p.name }}</a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onShops }}">
+<div data-screen-label="Shops" class="scr">
+  <a href="#" onClick="{{ goCloset }}" class="btn btn-secondary" style="margin-bottom:16px">← Closet</a>
+  <div class="kick">Where it all came from</div>
+  <h2 style="font-size:32px;margin:2px 0 18px">Shops</h2>
+  <div style="display:flex;flex-direction:column;gap:20px;padding:2px">
+    <sc-for list="{{ shops }}" as="s" hint-placeholder-count="4">
+      <div class="blueprint" style="padding:14px">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="row" style="margin-bottom:8px">
+          <div>
+            <div style="font-family:var(--font-heading);font-size:19px">{{ s.store }}</div>
+            <div class="mono">{{ s.city }}</div>
+          </div>
+          <div class="mono" style="margin-left:auto;text-align:right">{{ s.count }}<br>{{ s.spend }}</div>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ s.pieces }}" as="p" hint-placeholder-count="2">
+            <a href="#" onClick="{{ p.open }}" class="row rule" style="padding:8px 0;color:inherit;font-size:13.5px">
+              <span style="flex:1">{{ p.name }}</span><span class="mono">{{ p.right }}</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onNudges }}">
+<div data-screen-label="Nudges" class="scr">
+  <div class="kick">Quiet nudges</div>
+  <h2 style="font-size:32px;margin:2px 0 18px">Worth knowing</h2>
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <sc-for list="{{ notes }}" as="n" hint-placeholder-count="4">
+      <a href="#" onClick="{{ n.open }}" class="rule" style="display:flex;gap:12px;padding:15px 2px;color:inherit">
+        <div style="width:7px;height:7px;flex:none;margin-top:7px;background:var(--color-accent)"></div>
+        <div style="flex:1">
+          <div style="font-family:var(--font-heading);font-size:17px;line-height:1.25">{{ n.title }}</div>
+          <div style="font-size:13px;color:#1d1f20aa;margin-top:3px">{{ n.body }}</div>
+        </div>
+        <div class="mono" style="margin-top:5px">{{ n.when }}</div>
+      </a>
+    </sc-for>
+  </div>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ onYou }}">
+<div data-screen-label="Profile" class="scr">
+  <div class="row" style="gap:14px;margin-bottom:24px">
+    <div class="blueprint" style="position:relative;width:78px;height:78px;flex:none">
+      <image-slot style="position:absolute;inset:0;width:100%;height:100%" id="rack-avatar" shape="rect" fit="cover" placeholder="You"></image-slot>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </div>
+    <div>
+      <h2 style="font-size:26px;margin:0">My wardrobe</h2>
+      <div class="mono">{{ sinceLine }}</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding:2px;margin-bottom:24px">
+    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+      <div class="blueprint" style="padding:10px 8px">
+        <i class="corner tl"></i><i class="corner br"></i>
+        <div style="font-family:var(--font-heading);font-size:25px;line-height:1">{{ s.v }}</div>
+        <div class="mono" style="text-transform:uppercase;letter-spacing:.08em;font-size:9px;margin-top:4px">{{ s.k }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div class="kick" style="margin-bottom:6px">Elsewhere</div>
+  <div style="display:flex;flex-direction:column;margin-bottom:22px">
+    <a href="#" onClick="{{ goList }}" class="row rule" style="padding:13px 2px;color:inherit"><span style="flex:1;font-size:14.5px">Shopping list</span><span class="mono" style="margin-right:8px">{{ wishCount }}</span><span style="color:var(--color-accent)">→</span></a>
+    <a href="#" onClick="{{ goShops }}" class="row rule" style="padding:13px 2px;color:inherit"><span style="flex:1;font-size:14.5px">Shops &amp; spend</span><span style="color:var(--color-accent)">→</span></a>
+    <a href="#" onClick="{{ goNudges }}" class="row rule" style="padding:13px 2px;color:inherit"><span style="flex:1;font-size:14.5px">Nudges</span><span style="color:var(--color-accent)">→</span></a>
+    <a href="#" onClick="{{ goLog }}" class="row rule" style="padding:13px 2px;color:inherit"><span style="flex:1;font-size:14.5px">Full wear log</span><span style="color:var(--color-accent)">→</span></a>
+  </div>
+  <div class="kick" style="margin-bottom:6px">Settings</div>
+  <div style="display:flex;flex-direction:column">
+    <sc-for list="{{ settings }}" as="s" hint-placeholder-count="4">
+      <div class="row rule" style="gap:12px;padding:14px 2px">
+        <div style="flex:1">
+          <div style="font-size:14.5px">{{ s.label }}</div>
+          <div style="font-size:11.5px;color:#1d1f2099">{{ s.sub }}</div>
+        </div>
+        <label class="radio"><input type="checkbox" checked="{{ s.on }}" onChange="{{ s.toggle }}"><i class="dot"></i></label>
+      </div>
+    </sc-for>
+  </div>
+  <button class="btn btn-ghost btn-block" style="margin-top:18px" onClick="{{ askReset }}">Reset to the sample closet</button>
+  <div style="height:16px"></div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ addSheetOpen }}">
+<div style="position:absolute;inset:0;z-index:75;background:#1d1f2066;display:flex;align-items:flex-end" onClick="{{ closeAdd }}">
+  <div style="width:100%;background:var(--color-bg);border-top:1px solid var(--color-divider);padding:20px 16px 40px" onClick="{{ stop }}">
+    <div class="row" style="margin-bottom:14px">
+      <div style="font-family:var(--font-heading);font-size:20px">Add a piece</div>
+      <button class="btn btn-ghost" style="margin-left:auto" onClick="{{ closeAdd }}">Close</button>
+    </div>
+    <a href="#" onClick="{{ goLink }}" class="blueprint" style="display:block;padding:14px;margin-bottom:14px;color:inherit">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <div class="row">
+        <div style="flex:1">
+          <div style="font-family:var(--font-heading);font-size:18px">From a shop link</div>
+          <div style="font-size:12.5px;color:#1d1f20aa;margin-top:2px">Paste the product page. Send it to your closet or park it on the shopping list.</div>
+        </div>
+        <div style="color:var(--color-accent);font-size:16px">→</div>
+      </div>
+    </a>
+    <a href="#" onClick="{{ goNew }}" class="blueprint" style="display:block;padding:14px;color:inherit">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <div class="row">
+        <div style="flex:1">
+          <div style="font-family:var(--font-heading);font-size:18px">By hand</div>
+          <div style="font-size:12.5px;color:#1d1f20aa;margin-top:2px">A photo and whatever details you remember.</div>
+        </div>
+        <div style="color:var(--color-accent);font-size:16px">→</div>
+      </div>
+    </a>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ pickerOpen }}">
+<div style="position:absolute;inset:0;z-index:70;background:#1d1f2066;display:flex;align-items:flex-end" onClick="{{ closePicker }}">
+  <div style="width:100%;max-height:74%;overflow-y:auto;background:var(--color-bg);border-top:1px solid var(--color-divider);padding:20px 16px 40px" onClick="{{ stop }}">
+    <div class="row" style="margin-bottom:14px">
+      <div style="font-family:var(--font-heading);font-size:20px">{{ pickerTitle }}</div>
+      <button class="btn btn-ghost" style="margin-left:auto" onClick="{{ closePicker }}">Close</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ pickable }}" as="p" hint-placeholder-count="4">
+        <a href="#" onClick="{{ p.choose }}" class="row rule" style="gap:12px;padding:10px 2px;color:inherit">
+          <div class="ph" style="width:42px;height:54px;flex:none;border:1px solid var(--color-divider)"></div>
+          <div style="flex:1">
+            <div style="font-family:var(--font-heading);font-size:16px">{{ p.name }}</div>
+            <div class="mono">{{ p.metaLine }}</div>
+          </div>
+          <div style="color:var(--color-accent);font-size:18px">+</div>
+        </a>
+      </sc-for>
+      <sc-if value="{{ pickEmpty }}"><div style="font-size:13px;color:#1d1f20aa;padding:10px 2px">Nothing in this category yet.</div></sc-if>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ confirmOpen }}">
+<div class="dialog-backdrop" style="position:absolute;z-index:80" onClick="{{ closeConfirm }}">
+  <div class="dialog blueprint" onClick="{{ stop }}">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <div class="dialog-title">{{ confirmTitle }}</div>
+    <div class="dialog-body">{{ confirmBody }}</div>
+    <div class="dialog-actions">
+      <button class="btn btn-secondary" onClick="{{ closeConfirm }}">Keep it</button>
+      <button class="btn btn-primary" onClick="{{ doConfirm }}">{{ confirmCta }}</button>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ toast }}">
+<div style="position:absolute;left:16px;right:16px;bottom:110px;z-index:90;padding:12px 14px;background:var(--color-accent-900);color:var(--color-bg);font-size:13.5px">{{ toast }}</div>
+</sc-if>
+
+<sc-if value="{{ chromeOn }}">
+<div class="nav" style="flex:none;gap:0;padding:8px 6px 30px;border-top:1px solid var(--color-divider);background:var(--color-bg)">
+  <a href="#" onClick="{{ goCloset }}" aria-current="{{ curCloset }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+    <span style="font-family:var(--font-heading);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase">Closet</span>
+  </a>
+  <a href="#" onClick="{{ goOutfits }}" aria-current="{{ curOutfits }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+    <span style="font-family:var(--font-heading);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase">Outfits</span>
+  </a>
+  <a href="#" onClick="{{ goBuild }}" aria-current="{{ curBuild }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+    <span style="font-family:var(--font-heading);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase">Build</span>
+  </a>
+  <a href="#" onClick="{{ goLog }}" aria-current="{{ curLog }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="12" x2="15" y2="14"></line></svg>
+    <span style="font-family:var(--font-heading);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase">Log</span>
+  </a>
+  <a href="#" onClick="{{ goYou }}" aria-current="{{ curYou }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="3.5"></circle><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5"></path></svg>
+    <span style="font-family:var(--font-heading);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase">You</span>
+  </a>
+</div>
+</sc-if>
+
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:980},&quot;showPrices&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behaviour&quot;},&quot;showNudges&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behaviour&quot;}}">
+const CATS = ["Tops", "Bottoms", "Layers", "Shoes", "Extras"];
+const SLOTS = [
+  { key: "layer", label: "Layer", cat: "Layers" },
+  { key: "top", label: "Top", cat: "Tops" },
+  { key: "bottom", label: "Bottom", cat: "Bottoms" },
+  { key: "shoes", label: "Shoes", cat: "Shoes" },
+  { key: "extra", label: "Extra", cat: "Extras" },
+];
+const DAY = 86400000;
+const KEY = "rack.v2";
+
+const iso = (d) => new Date(d).toISOString().slice(0, 10);
+const wearDates = (id, n) => {
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(iso(Date.now() - ((i * 29 + id * 13) % 330) * DAY));
+  return Array.from(new Set(out)).sort().reverse();
+};
+
+const SEED = [
+  ["Ecru oxford shirt", "Tops", "Ecru", "Field & Loom", "Portland", "2024-03", 68, 24],
+  ["Navy wool blazer", "Layers", "Navy", "Corso 42", "Chicago", "2023-11", 210, 9],
+  ["Straight leg jeans", "Bottoms", "Indigo", "Northline Denim", "Online", "2024-06", 95, 41],
+  ["White leather sneakers", "Shoes", "White", "Harbor Goods", "Portland", "2024-02", 110, 63],
+  ["Cropped grey tee", "Tops", "Grey", "Studio Basics", "Online", "2025-07", 22, 18],
+  ["Pleated midi skirt", "Bottoms", "Olive", "Rue Marché", "Montreal", "2024-09", 34, 4],
+  ["Camel trench", "Layers", "Camel", "Meridian Supply", "Seattle", "2022-10", 290, 15],
+  ["Black ankle boots", "Shoes", "Black", "Corso 42", "Chicago", "2023-01", 180, 37],
+  ["Striped linen shirt", "Tops", "Blue / white", "Field & Loom", "Portland", "2025-05", 74, 11],
+  ["Wide chinos", "Bottoms", "Stone", "Studio Basics", "Online", "2025-04", 58, 2],
+  ["Knit cardigan", "Layers", "Oat", "Rue Marché", "Montreal", "2024-12", 45, 8],
+  ["Canvas tote", "Extras", "Natural", "Harbor Goods", "Portland", "2023-08", 38, 52],
+].map((r, i) => ({
+  id: i + 1, name: r[0], cat: r[1], colour: r[2], store: r[3], city: r[4],
+  bought: r[5], price: r[6], wears: wearDates(i + 1, r[7]),
+}));
+
+const SEED_OUTFITS = [
+  { id: 1, name: "Friday coffee run", ids: [5, 3, 4, 12] },
+  { id: 2, name: "Client meeting", ids: [2, 1, 10, 8] },
+  { id: 3, name: "Rainy commute", ids: [7, 9, 3, 8] },
+];
+
+const SETTINGS = [
+  { label: "Wear reminders", sub: "A nudge when something sits unworn for 90 days", on: true },
+  { label: "Show what I paid", sub: "Prices and cost per wear across the app", on: true },
+  { label: "Weekly recap", sub: "Sunday summary of what you actually wore", on: false },
+];
+
+const hostOf = (u) => {
+  try { return new URL(/^https?:/i.test(u) ? u : "https://" + u).hostname.replace(/^www\./, ""); }
+  catch (e) { return ""; }
+};
+const titleCase = (s) => s.replace(/\b[a-z]/g, (c) => c.toUpperCase());
+const cleanHost = (h) => h.replace(/^(www\d*|m|shop|store|us|uk)\./i, "");
+const storeFrom = (host) => {
+  const label = cleanHost(host).split(".")[0].replace(/[-_]/g, " ");
+  if (!label) return "";
+  return label.replace(/\s/g, "").length <= 3 ? label.toUpperCase() : titleCase(label);
+};
+const STOP = /^(productpage|product|products|item|items|dp|pd|prod|p|page|html?|shop|catalog|en|us|gb|uk|se|sv|de|fr|it|es|nl|dk|no|fi|men|women|kids)$/i;
+const refFrom = (u) => (String(u).match(/\d{6,}/) || [""])[0];
+const nameFrom = (u) => {
+  try {
+    const path = new URL(/^https?:/i.test(u) ? u : "https://" + u).pathname;
+    const parts = decodeURIComponent(path).split("/").filter(Boolean);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const words = parts[i].replace(/\.\w{2,5}$/, "").split(/[^A-Za-z0-9]+/)
+        .filter((w) => w && !STOP.test(w) && !/^\d+$/.test(w));
+      const out = words.join(" ").trim();
+      if (out.replace(/[^A-Za-z]/g, "").length >= 3) return out.charAt(0).toUpperCase() + out.slice(1);
+    }
+    return "";
+  } catch (e) { return ""; }
+};
+const guessCat = (n) => {
+  const s = n.toLowerCase();
+  if (/(shoe|sneaker|boot|loafer|sandal|trainer)/.test(s)) return "Shoes";
+  if (/(jean|trouser|chino|skirt|short|pant|slack)/.test(s)) return "Bottoms";
+  if (/(coat|jacket|blazer|cardigan|trench|knit|sweater|parka)/.test(s)) return "Layers";
+  if (/(bag|tote|belt|scarf|cap|hat|sock)/.test(s)) return "Extras";
+  return "Tops";
+};
+
+const SEED_WISH = [
+  { id: 101, name: "Corduroy overshirt", cat: "Layers", colour: "Rust", store: "Field & Loom", city: "Portland", price: 96, url: "https://fieldandloom.com/corduroy-overshirt", added: iso(Date.now() - 6 * DAY) },
+  { id: 102, name: "Ribbed wool socks", cat: "Extras", colour: "Charcoal", store: "Studio Basics", city: "Online", price: 18, url: "https://studiobasics.com/ribbed-wool-socks", added: iso(Date.now() - 2 * DAY) },
+];
+
+const blank = () => ({ name: "", cat: "Tops", colour: "", store: "", city: "", bought: iso(Date.now()).slice(0, 7), price: "" });
+const fmt = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+const fmtMonth = (m) => (/^\d{4}-\d{2}$/.test(m || "") ? new Date(m + "-15T12:00:00").toLocaleDateString("en-GB", { month: "short", year: "numeric" }) : m || "—");
+const ago = (d) => {
+  const days = Math.round((Date.now() - new Date(d + "T12:00:00")) / DAY);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return days + "d ago";
+  const m = Math.round(days / 30);
+  return m < 24 ? m + "mo ago" : Math.round(days / 365) + "y ago";
+};
+const money = (n) => "$" + Math.round(n);
+
+class Component extends DCLogic {
+  state = {
+    screen: "onboard", step: 0, cat: "All", sort: "Recent", q: "",
+    selId: null, editId: null, outfitId: null,
+    items: SEED, outfits: SEED_OUTFITS, settings: SETTINGS, wishlist: SEED_WISH,
+    linkUrl: "", linkRead: false, linkNote: "", dest: "Closet", addSheet: false,
+    slots: { layer: null, top: null, bottom: null, shoes: null, extra: null },
+    pickSlot: null, outfitName: "", draft: blank(),
+    confirm: null, toast: "", loaded: false,
+  };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) {
+        const d = JSON.parse(raw);
+        this.setState({
+          items: d.items || SEED, outfits: d.outfits || SEED_OUTFITS, wishlist: d.wishlist || SEED_WISH,
+          settings: d.settings || SETTINGS, screen: d.screen || "closet", loaded: true,
+        });
+      } else this.setState({ loaded: true });
+    } catch (e) { this.setState({ loaded: true }); }
+  }
+  componentDidUpdate() {
+    if (!this.state.loaded) return;
+    try {
+      const { items, outfits, settings, wishlist, screen } = this.state;
+      localStorage.setItem(KEY, JSON.stringify({ items, outfits, settings, wishlist, screen: ["onboard", "link"].includes(screen) ? "closet" : screen }));
+    } catch (e) {}
+  }
+
+  short(it) { return it ? it.name.split(" ").slice(-2).join(" ") : ""; }
+  prices() { return (this.props.showPrices ?? true) && this.state.settings[1].on; }
+  meta(it) { return it.store + (this.prices() ? " · " + money(it.price) : ""); }
+  go = (screen) => this.setState({ screen, toast: "" });
+  open = (id) => this.setState({ screen: "item", selId: id, toast: "" });
+  flash = (toast) => {
+    this.setState({ toast });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: "" }), 2400);
+  };
+  logWearFor = (ids) => {
+    const today = iso(Date.now());
+    this.setState((s) => ({
+      items: s.items.map((i) => (ids.includes(i.id) && !i.wears.includes(today) ? { ...i, wears: [today, ...i.wears] } : i)),
+    }));
+  };
+
+  renderVals() {
+    const st = this.state;
+    const items = st.items;
+    const prices = this.prices();
+    const byId = (id) => items.find((i) => i.id === id);
+    const lastWear = (it) => it.wears[0];
+    const cpwNum = (it) => (it.wears.length ? it.price / it.wears.length : it.price);
+
+    const q = st.q.trim().toLowerCase();
+    let shown = items.filter((it) =>
+      (st.cat === "All" || it.cat === st.cat) &&
+      (!q || (it.name + " " + it.store + " " + it.colour + " " + it.city).toLowerCase().includes(q))
+    );
+    if (st.sort === "Worn") shown = [...shown].sort((a, b) => b.wears.length - a.wears.length);
+    else if (st.sort === "Value") shown = [...shown].sort((a, b) => cpwNum(a) - cpwNum(b));
+    else shown = [...shown].sort((a, b) => (a.bought < b.bought ? 1 : -1));
+
+    const sel = byId(st.selId) || items[0] || SEED[0];
+    const dormant = items.filter((i) => !i.wears.length || Date.now() - new Date(i.wears[0] + "T12:00:00") > 90 * DAY);
+    const totalWears = items.reduce((a, i) => a + i.wears.length, 0);
+    const spend = items.reduce((a, i) => a + Number(i.price || 0), 0);
+    const best = [...items].filter((i) => i.wears.length).sort((a, b) => cpwNum(a) - cpwNum(b))[0] || sel;
+
+    const dayMap = {};
+    items.forEach((it) => it.wears.forEach((w) => { (dayMap[w] = dayMap[w] || []).push(it); }));
+    const logDays = Object.keys(dayMap).sort().reverse().slice(0, 40).map((w) => ({
+      when: fmt(w), ago: ago(w),
+      pieces: dayMap[w].map((it) => ({ name: it.name, open: (e) => { e.preventDefault(); this.open(it.id); } })),
+    }));
+
+    const shopMap = {};
+    items.forEach((it) => { (shopMap[it.store] = shopMap[it.store] || []).push(it); });
+    const shops = Object.keys(shopMap).sort((a, b) => shopMap[b].length - shopMap[a].length).map((store) => {
+      const list = shopMap[store];
+      return {
+        store, city: list[0].city,
+        count: list.length + (list.length === 1 ? " piece" : " pieces"),
+        spend: prices ? money(list.reduce((a, i) => a + Number(i.price || 0), 0)) + " total" : "",
+        pieces: list.map((it) => ({
+          name: it.name,
+          right: fmtMonth(it.bought) + " · " + it.wears.length + " wears",
+          open: (e) => { e.preventDefault(); this.open(it.id); },
+        })),
+      };
+    });
+
+    const notes = [];
+    const oldest = [...dormant].sort((a, b) => (lastWear(a) || "0") < (lastWear(b) || "0") ? -1 : 1)[0];
+    if (oldest) notes.push({
+      title: "The " + oldest.name.toLowerCase() + " hasn't been out in a while.",
+      body: lastWear(oldest) ? "Last worn " + fmt(lastWear(oldest)) + ". Still one of the good ones." : "Never worn since you added it.",
+      when: "2h", id: oldest.id,
+    });
+    if (best) notes.push({
+      title: "Your " + best.name.toLowerCase() + " is down to " + cpwNum(best).toFixed(2).replace(/^/, "$") + " a wear.",
+      body: best.wears.length + " wears logged. Best value in the closet.", when: "1d", id: best.id,
+    });
+    if (dormant.length > 1) notes.push({
+      title: dormant.length + " pieces are sitting unworn.",
+      body: "Worth a look before you buy anything new this month.", when: "3d", id: dormant[1].id,
+    });
+    const priciest = [...items].sort((a, b) => cpwNum(b) - cpwNum(a))[0];
+    if (priciest) notes.push({
+      title: "The " + priciest.name.toLowerCase() + " is your most expensive habit.",
+      body: cpwNum(priciest).toFixed(2).replace(/^/, "$") + " every time you wear it. A few more outings fixes that.",
+      when: "5d", id: priciest.id,
+    });
+
+    const filled = SLOTS.filter((s) => st.slots[s.key]).length;
+    const builderIds = SLOTS.map((s) => st.slots[s.key]).filter(Boolean);
+    const outfit = st.outfits.find((o) => o.id === st.outfitId) || st.outfits[0] || { name: "", ids: [] };
+
+    const setD = (k) => (e) => this.setState({ draft: { ...st.draft, [k]: e.target.value } });
+
+    return {
+      onOnboard: st.screen === "onboard", onCloset: st.screen === "closet", onItem: st.screen === "item",
+      onForm: st.screen === "form", onBuild: st.screen === "build", onOutfits: st.screen === "outfits",
+      onOutfit: st.screen === "outfit", onLog: st.screen === "log", onShops: st.screen === "shops",
+      onNudges: st.screen === "nudges", onYou: st.screen === "you",
+      onLink: st.screen === "link", onList: st.screen === "list",
+      addSheetOpen: st.addSheet,
+      openAdd: (e) => { e.preventDefault(); this.setState({ addSheet: true }); },
+      closeAdd: () => this.setState({ addSheet: false }),
+      goLink: (e) => { e.preventDefault(); this.setState({ screen: "link", addSheet: false, linkUrl: "", linkRead: false, dest: "Closet", draft: blank(), toast: "" }); },
+      goList: (e) => { e.preventDefault(); this.go("list"); },
+      linkUrl: st.linkUrl,
+      setLink: (e) => this.setState({ linkUrl: e.target.value }),
+      linkRead: st.linkRead,
+      namePreview: st.draft.name || "Name it below",
+      linkHost: cleanHost(hostOf(st.linkUrl)) || "the shop",
+      linkGuess: st.linkNote,
+      readLink: () => {
+        const host = hostOf(st.linkUrl);
+        if (!host) return this.flash("That doesn't look like a link yet.");
+        const name = nameFrom(st.linkUrl);
+        const ref = refFrom(st.linkUrl);
+        this.setState({
+          linkRead: true,
+          linkNote: name
+            ? (ref ? "Item " + ref + " · check the name and price" : "Read from the link · check the name and price")
+            : (ref ? "Item " + ref + " — this shop hides the name in the link. Type it in." : "No name in this link. Type it in."),
+          draft: { ...blank(), name, cat: guessCat(name || ""), store: storeFrom(host), city: "Online", price: "" },
+        });
+        this.flash(name ? "Got what we could from " + cleanHost(host) + "." : "Only the shop and item number in that one.");
+      },
+      dests: [
+        { title: "Straight into my closet", sub: "You already own it — it starts counting wears today.", mark: st.dest === "Closet" ? "●" : "○", pick: (e) => { e.preventDefault(); this.setState({ dest: "Closet" }); } },
+        { title: "Shopping list", sub: "Park it. The link stays so you can come back to it.", mark: st.dest === "List" ? "●" : "○", pick: (e) => { e.preventDefault(); this.setState({ dest: "List" }); } },
+      ],
+      linkCta: st.dest === "Closet" ? "Add to my closet" : "Save to shopping list",
+      saveLink: () => {
+        const d = st.draft;
+        if (!d.name.trim()) return this.flash("Give it a name first.");
+        if (st.dest === "Closet") {
+          const id = Math.max(0, ...items.map((i) => i.id)) + 1;
+          this.setState({
+            items: [{ id, name: d.name.trim(), cat: d.cat, colour: d.colour, store: d.store || storeFrom(hostOf(st.linkUrl)) || "Unknown shop", city: d.city || "Online", bought: iso(Date.now()).slice(0, 7), price: Number(d.price) || 0, url: st.linkUrl, wears: [] }, ...items],
+            screen: "item", selId: id, linkUrl: "", linkRead: false, draft: blank(),
+          });
+          this.flash("In your closet. Log a wear when you put it on.");
+        } else {
+          const id = Math.max(100, ...st.wishlist.map((w) => w.id)) + 1;
+          this.setState({
+            wishlist: [{ id, name: d.name.trim(), cat: d.cat, colour: d.colour, store: d.store, city: d.city || "Online", price: Number(d.price) || 0, url: st.linkUrl, added: iso(Date.now()) }, ...st.wishlist],
+            screen: "list", linkUrl: "", linkRead: false, draft: blank(),
+          });
+          this.flash("Saved to your shopping list.");
+        }
+      },
+      wishlist: st.wishlist.map((w) => ({
+        name: w.name, short: this.short(w), url: w.url, host: hostOf(w.url) || "link",
+        metaLine: w.store + (prices && w.price ? " · " + money(w.price) : "") + " · saved " + ago(w.added),
+        bought: () => {
+          const id = Math.max(0, ...items.map((i) => i.id)) + 1;
+          this.setState({
+            items: [{ id, name: w.name, cat: w.cat, colour: w.colour, store: w.store, city: w.city, bought: iso(Date.now()).slice(0, 7), price: Number(w.price) || 0, url: w.url, wears: [] }, ...items],
+            wishlist: st.wishlist.filter((x) => x.id !== w.id), screen: "item", selId: id,
+          });
+          this.flash("Moved into your closet.");
+        },
+        drop: () => { this.setState({ wishlist: st.wishlist.filter((x) => x.id !== w.id) }); this.flash("Off the list."); },
+      })),
+      wishCount: st.wishlist.length + (st.wishlist.length === 1 ? " saved" : " saved"),
+      wishTotal: money(st.wishlist.reduce((a, w) => a + Number(w.price || 0), 0)) + " if you bought it all",
+      wishEmpty: st.wishlist.length === 0,
+      hasWishlist: st.wishlist.length > 0,
+      chromeOn: st.screen !== "onboard",
+      showPrices: prices,
+
+      step0: st.step === 0, step1: st.step === 1, step2: st.step === 2,
+      stepLabel: "Step " + (st.step + 1) + " / 3",
+      next: () => this.setState({ step: 1, draft: blank() }),
+      enterApp: () => this.setState({ screen: "closet", draft: blank(), step: 0 }),
+      firstLine: st.draft.name ? "The " + st.draft.name.toLowerCase() + " is in." : "That's one down.",
+      saveFirst: () => {
+        const d = st.draft;
+        if (!d.name.trim()) return this.flash("Give it a name first.");
+        const id = Math.max(0, ...items.map((i) => i.id)) + 1;
+        this.setState({
+          items: [{ id, name: d.name.trim(), cat: d.cat, colour: d.colour, store: d.store || "Unknown shop", city: d.city, bought: d.bought, price: Number(d.price) || 0, wears: [] }, ...items],
+          step: 2,
+        });
+      },
+      draft: { ...st.draft, slotId: "photo-" + (st.editId || "new") },
+      catOpts: CATS.map((c) => ({ name: c === "Extras" ? "Extra" : c, on: st.draft.cat === c, pick: () => this.setState({ draft: { ...st.draft, cat: c } }) })),
+      setDraftName: setD("name"), setDraftStore: setD("store"), setDraftCity: setD("city"),
+      setDraftColour: setD("colour"), setDraftBought: setD("bought"), setDraftPrice: setD("price"),
+      formKick: st.editId ? "Editing" : "New piece",
+      formTitle: st.editId ? "Edit details" : "Add a piece",
+      saveItemLabel: st.editId ? "Save changes" : "Add to my closet",
+      saveDraft: () => {
+        const d = st.draft;
+        if (!d.name.trim()) return this.flash("Give it a name first.");
+        if (st.editId) {
+          this.setState({
+            items: items.map((i) => (i.id === st.editId ? { ...i, name: d.name.trim(), cat: d.cat, colour: d.colour, store: d.store, city: d.city, bought: d.bought, price: Number(d.price) || 0 } : i)),
+            screen: "item", selId: st.editId, editId: null,
+          });
+          this.flash("Updated.");
+        } else {
+          const id = Math.max(0, ...items.map((i) => i.id)) + 1;
+          this.setState({
+            items: [{ id, name: d.name.trim(), cat: d.cat, colour: d.colour, store: d.store || "Unknown shop", city: d.city, bought: d.bought, price: Number(d.price) || 0, wears: [] }, ...items],
+            screen: "item", selId: id, draft: blank(),
+          });
+          this.flash("Added to your closet.");
+        }
+      },
+      goNew: (e) => { e.preventDefault(); this.setState({ screen: "form", editId: null, draft: blank(), addSheet: false }); },
+      goEdit: (e) => { e.preventDefault(); this.setState({ screen: "form", editId: sel.id, draft: { ...sel, price: String(sel.price) } }); },
+
+      countLine: items.length + " pieces",
+      wornLine: totalWears + " wears",
+      spendLine: money(spend) + " in",
+      q: st.q,
+      setQ: (e) => this.setState({ q: e.target.value }),
+      cats: ["All", ...CATS].map((c) => ({ name: c === "Extras" ? "Extra" : c, on: st.cat === c, pick: () => this.setState({ cat: c }) })),
+      sorts: ["Recent", "Worn", "Value"].map((s) => ({ name: s, on: st.sort === s, pick: () => this.setState({ sort: s }) })),
+      showNudge: (this.props.showNudges ?? true) && st.settings[0].on && dormant.length > 0,
+      nudgeHead: dormant.length + (dormant.length === 1 ? " piece hasn't" : " pieces haven't") + " been worn in three months.",
+      nudgeSub: "Tap to see which, before you buy anything new.",
+      shown: shown.map((it) => ({
+        id: it.id, name: it.name, slotId: "photo-" + it.id, short: this.short(it),
+        metaLine: this.meta(it) + " · " + it.wears.length + " wears",
+        open: (e) => { e.preventDefault(); this.open(it.id); },
+      })),
+      noResults: shown.length === 0,
+
+      sel: {
+        name: sel.name, cat: sel.cat, colour: sel.colour || "—", store: sel.store, city: sel.city || "—",
+        slotId: "photo-" + sel.id, bought: fmtMonth(sel.bought),
+        wornTag: sel.wears.length + " wears", priceLabel: money(sel.price),
+        wornLabel: sel.wears.length + " times",
+        lastWorn: sel.wears.length ? fmt(sel.wears[0]) + " (" + ago(sel.wears[0]) + ")" : "never",
+        cpw: sel.wears.length ? "$" + cpwNum(sel).toFixed(2) + " a wear" : "no wears yet",
+        wearLog: sel.wears.slice(0, 6).map((w) => ({ when: fmt(w), ago: ago(w) })),
+        neverWorn: sel.wears.length === 0,
+        inOutfits: st.outfits.filter((o) => o.ids.includes(sel.id)).map((o) => ({
+          name: o.name, open: (e) => { e.preventDefault(); this.setState({ screen: "outfit", outfitId: o.id }); },
+        })),
+        noOutfits: !st.outfits.some((o) => o.ids.includes(sel.id)),
+        url: sel.url || "",
+        hasUrl: !!sel.url,
+        host: hostOf(sel.url || "") || "the shop page",
+      },
+      back: (e) => { e.preventDefault(); this.go("closet"); },
+      logWear: () => {
+        this.logWearFor([sel.id]);
+        this.flash(sel.wears.includes(iso(Date.now())) ? "Already logged today." : "Logged. That's " + (sel.wears.length + 1) + " wears.");
+      },
+      addToOutfit: () => {
+        const slot = SLOTS.find((s) => s.cat === sel.cat) || SLOTS[4];
+        this.setState({ screen: "build", slots: { ...st.slots, [slot.key]: sel.id } });
+        this.flash(sel.name + " dropped into " + slot.label.toLowerCase() + ".");
+      },
+      askDelete: () => this.setState({ confirm: "item" }),
+
+      slots: SLOTS.map((s) => {
+        const it = byId(st.slots[s.key]);
+        return {
+          label: s.label, name: it ? it.name : "Nothing yet",
+          sub: it ? it.store + " · " + fmtMonth(it.bought) : "Tap to pick from " + s.cat.toLowerCase(),
+          short: it ? this.short(it) : s.label, mark: it ? "×" : "+",
+          pick: (e) => { e.preventDefault(); this.setState({ pickSlot: s.key }); },
+          act: (e) => {
+            e.preventDefault();
+            if (it) this.setState({ slots: { ...st.slots, [s.key]: null } });
+            else this.setState({ pickSlot: s.key });
+          },
+        };
+      }),
+      builderValue: money(builderIds.reduce((a, id) => a + Number(byId(id).price || 0), 0)),
+      outfitName: st.outfitName,
+      setName: (e) => this.setState({ outfitName: e.target.value }),
+      saveLabel: filled ? "Save this outfit (" + filled + " pieces)" : "Add a piece to save",
+      clearBuilder: () => this.setState({ slots: { layer: null, top: null, bottom: null, shoes: null, extra: null }, outfitName: "" }),
+      saveOutfit: () => {
+        if (!filled) return this.flash("Pick at least one piece first.");
+        const id = Math.max(0, ...st.outfits.map((o) => o.id)) + 1;
+        this.setState({
+          outfits: [{ id, name: st.outfitName.trim() || "Untitled outfit", ids: builderIds }, ...st.outfits],
+          screen: "outfits", outfitName: "",
+          slots: { layer: null, top: null, bottom: null, shoes: null, extra: null },
+        });
+        this.flash("Saved. It's at the top of your outfits.");
+      },
+
+      outfits: st.outfits.map((o) => ({
+        name: o.name, meta: o.ids.length + " pieces" + (prices ? " · " + money(o.ids.reduce((a, id) => a + Number((byId(id) || {}).price || 0), 0)) : ""),
+        pieces: o.ids.map((id) => ({ short: this.short(byId(id)) })),
+        open: (e) => { e.preventDefault(); this.setState({ screen: "outfit", outfitId: o.id }); },
+      })),
+      noOutfitsAtAll: st.outfits.length === 0,
+      outfit: {
+        name: outfit.name, meta: outfit.ids.length + " pieces",
+        value: money(outfit.ids.reduce((a, id) => a + Number((byId(id) || {}).price || 0), 0)),
+        pieces: outfit.ids.filter(byId).map((id) => {
+          const it = byId(id);
+          return { name: it.name, metaLine: this.meta(it) + " · " + it.wears.length + " wears", open: (e) => { e.preventDefault(); this.open(id); } };
+        }),
+      },
+      wearOutfit: () => { this.logWearFor(outfit.ids); this.flash("Logged " + outfit.ids.length + " pieces for today."); },
+      editOutfit: () => {
+        const slots = { layer: null, top: null, bottom: null, shoes: null, extra: null };
+        outfit.ids.forEach((id) => {
+          const it = byId(id); if (!it) return;
+          const s = SLOTS.find((x) => x.cat === it.cat) || SLOTS[4];
+          slots[s.key] = id;
+        });
+        this.setState({ screen: "build", slots, outfitName: outfit.name });
+      },
+      deleteOutfit: () => this.setState({ confirm: "outfit" }),
+
+      logDays, logCount: totalWears + " wears logged",
+      logSpan: logDays.length ? "since " + logDays[logDays.length - 1].when : "nothing yet",
+      shops,
+      notes: notes.map((n) => ({ ...n, open: (e) => { e.preventDefault(); this.open(n.id); } })),
+
+      sinceLine: items.length + " pieces · " + st.outfits.length + " outfits · " + shops.length + " shops",
+      stats: [
+        { v: String(items.length), k: "Pieces" },
+        { v: String(totalWears), k: "Wears" },
+        { v: prices ? "$" + (spend / Math.max(1, totalWears)).toFixed(2) : String(dormant.length), k: prices ? "Avg / wear" : "Unworn" },
+      ],
+      settings: st.settings.map((s, i) => ({
+        label: s.label, sub: s.sub, on: s.on,
+        toggle: () => this.setState({ settings: st.settings.map((x, j) => (j === i ? { ...x, on: !x.on } : x)) }),
+      })),
+      askReset: () => this.setState({ confirm: "reset" }),
+
+      pickerOpen: !!st.pickSlot,
+      pickerTitle: st.pickSlot ? "Pick a " + SLOTS.find((s) => s.key === st.pickSlot).label.toLowerCase() : "",
+      closePicker: () => this.setState({ pickSlot: null }),
+      stop: (e) => e.stopPropagation(),
+      pickable: st.pickSlot
+        ? items.filter((i) => i.cat === SLOTS.find((s) => s.key === st.pickSlot).cat).map((i) => ({
+            name: i.name, metaLine: this.meta(i),
+            choose: (e) => { e.preventDefault(); this.setState({ slots: { ...st.slots, [st.pickSlot]: i.id }, pickSlot: null }); },
+          }))
+        : [],
+      pickEmpty: !!st.pickSlot && !items.some((i) => i.cat === SLOTS.find((s) => s.key === st.pickSlot).cat),
+
+      confirmOpen: !!st.confirm,
+      confirmTitle: st.confirm === "reset" ? "Start over?" : st.confirm === "outfit" ? "Delete this outfit?" : "Remove this piece?",
+      confirmBody: st.confirm === "reset"
+        ? "Your pieces, outfits and wear log go back to the sample closet. Photos you dropped stay."
+        : st.confirm === "outfit" ? "The pieces stay in your closet — only the set goes." : "Its wear history goes with it. This can't be undone.",
+      confirmCta: st.confirm === "reset" ? "Reset" : "Delete",
+      closeConfirm: () => this.setState({ confirm: null }),
+      doConfirm: () => {
+        if (st.confirm === "item") {
+          this.setState({
+            items: items.filter((i) => i.id !== sel.id),
+            outfits: st.outfits.map((o) => ({ ...o, ids: o.ids.filter((id) => id !== sel.id) })),
+            confirm: null, screen: "closet",
+          });
+          this.flash("Removed.");
+        } else if (st.confirm === "outfit") {
+          this.setState({ outfits: st.outfits.filter((o) => o.id !== outfit.id), confirm: null, screen: "outfits" });
+          this.flash("Outfit deleted.");
+        } else {
+          this.setState({ items: SEED, outfits: SEED_OUTFITS, wishlist: SEED_WISH, settings: SETTINGS, confirm: null, screen: "closet", q: "", cat: "All" });
+          this.flash("Back to the sample closet.");
+        }
+      },
+
+      toast: st.toast,
+      goCloset: (e) => { e.preventDefault(); this.go("closet"); },
+      goOutfits: (e) => { e.preventDefault(); this.go("outfits"); },
+      goBuild: (e) => { e.preventDefault(); this.go("build"); },
+      goLog: (e) => { e.preventDefault(); this.go("log"); },
+      goYou: (e) => { e.preventDefault(); this.go("you"); },
+      goShops: (e) => { e.preventDefault(); this.go("shops"); },
+      goNudges: (e) => { e.preventDefault(); this.go("nudges"); },
+      curCloset: ["closet", "item", "form", "shops", "link", "list"].includes(st.screen) ? "page" : undefined,
+      curOutfits: ["outfits", "outfit"].includes(st.screen) ? "page" : undefined,
+      curBuild: st.screen === "build" ? "page" : undefined,
+      curLog: st.screen === "log" ? "page" : undefined,
+      curYou: ["you", "nudges"].includes(st.screen) ? "page" : undefined,
+    };
+  }
+}
+</script>
+</body>
+</html>
